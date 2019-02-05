@@ -1,0 +1,78 @@
+<!-- This is a simple html page that will be displayed as a Custom Dashboard on a TV -->
+<!-- This can be reused in as is or even modified freely. -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC 
+"-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+	<head>
+		<meta http-equiv="content-type" content="application/ce-html+xml; charset=UTF-8"/>	
+		<link rel="stylesheet" type="text/css" href="ExerciseStyles.css" />
+
+		<script type="text/javascript" src="ExerciseController.js"></script>
+		<script type="text/javascript" src="ExerciseView.js"></script>
+		<script type="text/javascript" src="ExerciseModel.js"></script>
+		<script type="text/javascript" src="ExerciseUtility.js"></script>
+	</head>
+
+	<body onload="document.getElementById('ButtonRefreshPage').focus(); init()">
+		<div class="nav">
+			<header>
+				<h1>Exercise02</h1>
+			</header>
+		
+			<button id="ButtonGetClock" onclick="getSystemDate()">Get Date and Time</button> <br>
+			<button id="ButtonSetClock" onclick="ChangeNewSystemDateAndTime()">Set System Date and Time</button> <br>
+			<button id="ButtonWIXPGetUpgradeControl" onclick="GetCloneInformation()">Get Clone Information</button> <br>
+		 
+			<div class="PHILIPS_LOGO">
+				<button id="ButtonRefreshPage" onclick="UtilityRefreshPage()">Refresh Page</button> <br>
+				<button id="ButtonToggleLogs" onclick="UtilityToggleLogsWindow()">Hide Logs</button> <br>
+				<button id="ButtonClearLogs" onclick="UtilityClearLogsWindow()">Clear Logs</button> <br>
+				<img src="PhilipsLogo.png" height="43" width="175"> </img>
+			</div>
+		</div>
+
+		<div id="IDJAPITToTV_Misc" class="JAPITToTV_Misc">
+			<p id="IdHeadingLogMsg" class="IOContentsColor"> "WIXP (CDB --> TV) And Other Logs"</p>
+			<textarea id="logmsg" rows="50" cols="53" style="resize:none" readonly></textarea>
+		</div>
+		
+		<div id="IDJAPITFromTV" class="JAPITFromTV">
+			<p id="IdHeadingLogMsgCallback" class="IOContentsColor"> "WIXP (TV --> CDB)"</p>
+			<textarea id="logmsgcallback" rows="50" cols="53" style="resize:none" readonly></textarea>
+		</div>
+		
+		<div id="DivIO" class="InputOutput">
+				<br>
+				<br>
+				<br>
+				<br>
+				<p class="IOContentsColor" style="font-size:24px; color:blue"> =====>ClockControl<=====</p>
+				<p id="IdDateText" class="IOContentsColor"> Current System Date: </p>
+				<p id="IdTimeText" class="IOContentsColor"> Current System Time: </p>
+				<p id="IdLinuxDateTime" class="IOContentsColor"> Linux Date Time: </p>
+				
+				<p class="IOContentsColor"> Enter System Date: 
+				<!-- <input value="2013-5-5T21:10:00" type="datetime-local"> </input> <br> -->
+				<input id="IdDateInputText" value="5/5/2013" type="text"> </input> <br>
+				</p>
+				
+				<p class="IOContentsColor"> Enter System Time: 
+				<input id="IdTimeInputText" value="21:10:00" type="text"> </input> <br>
+				</p>
+				
+				<p class="IOContentsColor" style="font-size:24px; color:blue"> =====>UpgradeControl<=====</p>
+				<p id="IdMainFirmwareVersion" class="IOContentsColor"> MainFirmware Vesrion:  </p>
+				<p id="IdTVSettingsVersion" class="IOContentsColor"> TVSettings Version/Identifier:  </p>
+				<p id="IdTVChannelListVersion" class="IOContentsColor"> TVChannelList Version/Identifier:  </p>
+				
+		</div>
+		
+		<!-- WIXP object instantiation-->
+		<object style="visibility: hidden;" type="application/jswebixp" width="0" height="0" id="JAPITWIXPPlugin" /> 
+		
+	</body> 
+</html>

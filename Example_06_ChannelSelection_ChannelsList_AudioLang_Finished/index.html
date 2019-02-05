@@ -1,0 +1,86 @@
+<!-- This is a simple html page that will be displayed as a Custom Dashboard on a TV -->
+<!-- This can be reused in as is or even modified freely. -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC 
+"-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+	<head>
+		<meta http-equiv="content-type" content="application/ce-html+xml; charset=UTF-8"/>	
+		<link rel="stylesheet" type="text/css" href="ExerciseStyles.css" />
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		
+		<script type="text/javascript" src="ExerciseController.js"></script>
+		<script type="text/javascript" src="ExerciseView.js"></script>
+		<script type="text/javascript" src="ExerciseModel.js"></script>
+		<script type="text/javascript" src="ExerciseUtility.js"></script>
+	</head>
+
+	<body onload="document.getElementById('ButtonRefreshPage').focus(); init()">
+		<div class="nav">
+			<header>
+				<h1>Exercise01</h1>
+			</header>
+			<h4>Please select a source:</h4>
+			<button id="ButtonSelectMaintuner" onclick="switchToSource('MainTuner')">Select MainTuner</button>
+			<button id="ButtonSelectHDMI1" onclick="switchToSource('HDMI1')">Select HDMI1</button>
+			<input type="number" id="chNum">
+			<button id="ButtonChangeChannelByNumber" onclick="ChangeChannel()">Select Channel</button>
+			<button id="ButtonGetChannelList" onclick="GetChannelList()">Get Channels List</button>
+			<!-- <button id="ButtonGetAudioLanguage" onclick="getAudioLang()">Audio Language</button> -->
+		 
+			<div class="PHILIPS_LOGO">
+				<button id="ButtonRefreshPage" onclick="UtilityRefreshPage()">Refresh Page</button> <br>
+				<button id="ButtonToggleLogs" onclick="UtilityToggleLogsWindow()">Hide Logs</button> <br>
+				<button id="ButtonClearLogs" onclick="UtilityClearLogsWindow()">Clear Logs</button> <br>
+				<img src="PhilipsLogo.png" height="43" width="175"> </img>
+			</div>
+		</div>
+
+		<div id="IDJAPITToTV_Misc" class="JAPITToTV_Misc">
+			<p id="IdHeadingLogMsg" class="IOContentsColor"> "WIXP (CDB --> TV) And Other Logs"</p>
+			<textarea id="logmsg" rows="50" cols="53" style="resize:none" readonly></textarea>
+		</div>
+		
+		<div id="IDJAPITFromTV" class="JAPITFromTV">
+			<p id="IdHeadingLogMsgCallback" class="IOContentsColor"> "WIXP (TV --> CDB)"</p>
+			<textarea id="logmsgcallback" rows="50" cols="53" style="resize:none" readonly></textarea>
+		</div>
+		
+		<div id="DivIO1" class="Input_Output">
+			<p class="IOContentsColor" style="font-size:16px; color:blue"> =====>Channel Selection Status<=====</p>
+			<p id="IdChannelNumber" class="IOContentsColor"> Channel Number: </p>
+			<p id="IdChannelSelectionStatus" class="IOContentsColor"> Channel Selection Status: </p>
+			<p id="IdChannelSelectionFailureReason" class="IOContentsColor"> Channel Selection Failure Reason: </p>
+			<p id="IdChannelPlayingStatus" class="IOContentsColor"> Channel Playing Status: </p>
+			<p id="IdChannelPlayingStatusErrorDetails" class="IOContentsColor"> Channel Playing Error Status: </p>
+			<p class="IOContentsColor" style="font-size:16px; color:blue"> =====>Audio Languages<=====</p>
+			<table id="IDAudioLanguageList">
+				<tr>
+					<th>Index</th>		
+					<th>Language</th>
+  				</tr>
+			</table>
+		</div>
+		
+		<div id="DivIO2" class="Input_Output">	
+			<p class="IOContentsColor" style="font-size:16px; color:blue"> =====>Channel List<=====</p>
+			<h2 id="demo"> Number of channels: </h2>
+			<h2 id="demo2"> Channels List: </h2>
+			<table id="chTable">
+				<tr>
+					<th>Channel Number</th>
+					<th>Channel Name</th>		
+    				<th>Channel Type</th>
+  				</tr>
+			</table>
+		</div>
+		
+		<!-- WIXP object instantiation-->
+		<object style="visibility: hidden;" type="application/jswebixp" width="0" height="0" id="JAPITWIXPPlugin" /> 
+		
+	</body> 
+</html>
