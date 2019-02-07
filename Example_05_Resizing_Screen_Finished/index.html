@@ -7,63 +7,75 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
-	<head>
-		<meta http-equiv="content-type" content="application/ce-html+xml; charset=UTF-8"/>	
-		<link rel="stylesheet" type="text/css" href="ExerciseStyles.css" />
-	</head>
+<head>
+	<meta http-equiv="content-type" content="application/ce-html+xml; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="ExerciseStyles.css" />
+</head>
 
-	<body onload="document.getElementById('ButtonRefreshPage').focus(); init()">
+<body onload="document.getElementById('ButtonRefreshPage').focus(); init()">
 
-		<div id="container" style="z-index: 1;">
-		
-			<div class="nav" style="position: absolute;">
-			
-				<header>
-					<h1>Exercise05</h1>
-				</header>
-			
+	<div id="container" style="z-index: 1;">
+
+		<div class="nav" style="position: absolute;">
+
+			<header>
+				<h1>Exercise05</h1>
+			</header>
+
+			<div>
+				<!--
 				<button onclick="fullScreen()">Full Screen</button>
 				<button onclick="smallScreen()">1100 X 650</button>
 				<button onclick="smallerScreen()">800 X 600</button>
 				<button onclick="muchSmallerScreen()">320 X 180</button>
+				-->
+				<button onclick="videoSize(0)">1980x1080</button>
+				<button onclick="videoSize(1)">1280x720</button>
+				<button onclick="videoSize(2)">1024x576</button>
+			</div>
+			<div class="PHILIPS_Control">
+				<p id="theX"></a>
+			</div>
 
+
+			<br>
+
+			<div class="PHILIPS_LOGO">
+				<button id="ButtonRefreshPage" onclick="UtilityRefreshPage()">Refresh Page</button>
 				<br>
-		 
-				<div class="PHILIPS_LOGO">
-					<button id="ButtonRefreshPage" onclick="UtilityRefreshPage()">Refresh Page</button>
-					<br>
-					<button id="ButtonToggleLogs" onclick="UtilityToggleLogsWindow()">Hide Logs</button>
-					<br>
-					<button id="ButtonClearLogs" onclick="UtilityClearLogsWindow()">Clear Logs</button>
-					<img src="PhilipsLogo.png" height="43" width="175"> </img>
-				</div>
-
+				<button id="ButtonToggleLogs" onclick="UtilityToggleLogsWindow()">Hide Logs</button>
+				<br>
+				<button id="ButtonClearLogs" onclick="UtilityClearLogsWindow()">Clear Logs</button>
+				<img src="PhilipsLogo.png" height="43" width="175"> </img>
 			</div>
 
-
-			<div id="IDJAPITToTV_Misc" class="JAPITToTV_Misc">
-				<p id="IdHeadingLogMsg" class="IOContentsColor"> "WIXP (CDB --> TV) And Other Logs"</p>
-				<textarea id="logmsg" rows="50" cols="53" style="resize:none" readonly></textarea>
-			</div>
-		
-			<div id="IDJAPITFromTV" class="JAPITFromTV">
-				<p id="IdHeadingLogMsgCallback" class="IOContentsColor"> "WIXP (TV --> CDB)"</p>
-				<textarea id="logmsgcallback" rows="50" cols="53" style="resize:none" readonly></textarea>
-			</div>
-		
 		</div>
 
-		<div id="vidDiv" style="width: 75%; height: 75%; position: absolute; top: 0;right: 0; z-index: -1;"> 
-			<object id="vidObject" style="position:absolute;" type="video/broadcast"/>
+
+		<div id="IDJAPITToTV_Misc" class="JAPITToTV_Misc">
+			<p id="IdHeadingLogMsg" class="IOContentsColor"> "WIXP (CDB --> TV) And Other Logs"</p>
+			<textarea id="logmsg" rows="50" cols="53" style="resize:none" readonly></textarea>
 		</div>
 
-		<!-- WIXP object instantiation-->
-		<object style="visibility: hidden;" type="application/jswebixp" width="0" height="0" id="JAPITWIXPPlugin" /> 
+		<div id="IDJAPITFromTV" class="JAPITFromTV">
+			<p id="IdHeadingLogMsgCallback" class="IOContentsColor"> "WIXP (TV --> CDB)"</p>
+			<textarea id="logmsgcallback" rows="50" cols="53" style="resize:none" readonly></textarea>
+		</div>
 
-		<script type="text/javascript" src="ExerciseController.js"></script>
-		<script type="text/javascript" src="ExerciseView.js"></script>
-		<script type="text/javascript" src="ExerciseModel.js"></script>
-		<script type="text/javascript" src="ExerciseUtility.js"></script>
+	</div>
 
-	</body> 
+	<div id="vidDiv" style="width: 75%; height: 75%; position: absolute; top: 0;right: 0; z-index: -1;">
+		<object id="vidObject" style="position:absolute;" type="video/broadcast" />
+	</div>
+
+	<!-- WIXP object instantiation-->
+	<object style="visibility: hidden;" type="application/jswebixp" width="0" height="0" id="JAPITWIXPPlugin" />
+
+	<script type="text/javascript" src="ExerciseController.js"></script>
+	<script type="text/javascript" src="ExerciseView.js"></script>
+	<script type="text/javascript" src="ExerciseModel.js"></script>
+	<script type="text/javascript" src="ExerciseUtility.js"></script>
+
+</body>
+
 </html>
