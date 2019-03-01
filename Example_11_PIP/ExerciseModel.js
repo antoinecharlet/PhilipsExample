@@ -19,8 +19,8 @@ var playerRect__ = {
 };
 
 var CurrentTuningParameters;
-var FullScreenTuningParameters= {"ChannelTuningDetails":{"URL":"multicast://227.0.11.1:11022/0/0/0"}};
-var PipTuningParameters= 		{"ChannelTuningDetails":{"URL":"multicast://229.0.11.1:11022/0/0/0"}};
+var FullScreenTuningParameters = { "ChannelTuningDetails": { "URL": "multicast://227.0.11.1:11022/0/0/0" } };
+var PipTuningParameters = { "ChannelTuningDetails": { "URL": "multicast://229.0.11.1:11022/0/0/0" } };
 
 function ExerciseModelInit() {
 	try {
@@ -86,7 +86,7 @@ function WIXPResponseHandler(WIXPResponseJSON) {
 		Logout("WIXPResponseHandler() ERROR. " + e);
 		return e;
 	}
-	Logout("Exit WIXPResponseHandler \n");
+	//Logout("Exit WIXPResponseHandler \n");
 }
 
 /* function to send commands to TV */
@@ -113,27 +113,36 @@ function CreateJAPITObjectForWIXPSvc() {
 
 
 function tuneFullscreen() {
+	Logout("tuneFullScreen()");
+	try {
+		var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
+		JAPITObjForWIXPSvc.CmdType = "Change";
+		JAPITObjForWIXPSvc.Fun = "ChannelSelection";
+		JAPITObjForWIXPSvc.CommandDetails = FullScreenTuningParameters;
+		sendWIxPCommand(JAPITObjForWIXPSvc);
+	} catch (e) {
+		Logout("tuneFullScreen() ERROR. " + e.message);
+	}
 
-
-	var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
-	JAPITObjForWIXPSvc.CmdType = "Change";
-	JAPITObjForWIXPSvc.Fun = "ChannelSelection";
-	JAPITObjForWIXPSvc.CommandDetails = FullScreenTuningParameters;
-	sendWIxPCommand(JAPITObjForWIXPSvc);
 }
 
 function tunePIP() {
-	
-	var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
-	JAPITObjForWIXPSvc.CmdType = "Change";
-	JAPITObjForWIXPSvc.Fun = "ChannelSelection";
-	JAPITObjForWIXPSvc.CommandDetails = PipTuningParameters;
-	sendWIxPCommand(JAPITObjForWIXPSvc);
-
+	Logout("tunePIP()");
+	try {
+		var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
+		JAPITObjForWIXPSvc.CmdType = "Change";
+		JAPITObjForWIXPSvc.Fun = "ChannelSelection";
+		JAPITObjForWIXPSvc.CommandDetails = PipTuningParameters;
+		sendWIxPCommand(JAPITObjForWIXPSvc);
+	} catch (e) {
+		Logout("tunePIP() ERROR. " + e.message);
+	}
 }
 
 
 function SetPictureSize(left, top, width, height, element) {
+
+	Logout("SetPictureSize");
 
 	var VideoDiv = document.getElementById(element);
 
@@ -193,12 +202,13 @@ function SetPictureSize(left, top, width, height, element) {
 	} catch (e) {
 		Logout("setPictureSize() ERROR" + e.message);
 	}
+
 }
 
 /* set the style for the Player window with the given values in this.playerRect__ */
 function setPipPlayerRect() {
 	Logout("setPlayerRect()");
-
+	/*
 	var element = playerRect__.element;
 	var VideoDiv = document.getElementById(element);
 
@@ -236,9 +246,13 @@ function setPipPlayerRect() {
 	} catch (e) {
 		this.LogError("setPlayerRect() ERROR#1. " + e.message);
 	}
+	*/
 }
 
-function stopCurrentChannel()	{
+function stopCurrentChannel() {
+
+	Logout("setPlayerRect()");
+	/*
 	try {
 		var ParameterObj;
 		document.getElementById(playerRect__.element).style.zIndex = "0";
@@ -257,4 +271,5 @@ function stopCurrentChannel()	{
 	} catch (e) {
 		Logout("stopCurrentChannel() ERROR. " + e.message);
 	}
+	*/
 }

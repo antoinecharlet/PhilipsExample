@@ -7,12 +7,12 @@
 var IdCurrentPowerStateText;
 var IdPowerTransitionText;
 
-const CurrentPowerState = "Current Power State: ";
-const PowerTransition = "Power Transition In Progress: ";
+CurrentPowerState = "Current Power State: ";
+PowerTransition = "Power Transition In Progress: ";
 
 function ExerciseViewInit()
 {
-	CreateHTMLElements();
+	//CreateHTMLElements();
 }
 
 function CreateHTMLElements()
