@@ -19,24 +19,108 @@ var playerRect__ = {
 };
 
 var CurrentTuningParameters;
-var urlFullScreen = "multicast://227.0.11.1:11022/0/0/0";
+var urlFullScreen = "multicast://227.0.12.8:11022/0/0/0";
 var urlPip = "multicast://229.0.11.1:11022/0/0/0";
 
 function ExerciseModelInit() {
+	Logout("Start ExerciseModelInit()");
 	try {
+		Logout("Start ExerciseModelInit()");
 		// Register Callback
 		JAPITWIXPPlugin.WebIXPOnReceive = WIXPResponseHandler;
 		if (vidObject.bindToCurrentChannel != undefined) {
 			vidObject.bindToCurrentChannel();
 		}
-		tuneFullscreen();
-	} catch (e) {
-		Logout("exception in ExerciseModelInit()" + e);
-	}
+		//tuneFullscreen();
+		var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
+		JAPITObjForWIXPSvc.CmdType = "Change";
+		JAPITObjForWIXPSvc.Fun = "UserInputControl";
+		JAPITObjForWIXPSvc.CommandDetails = {
+			"VirtualKeyForwardMode": "SelectiveVirtualKeyForward",
+			"VirtualKeyToBeForwarded": [
+				{ "Vkkey": "HBBTV_VK_1" },
+				{ "Vkkey": "HBBTV_VK_2" },
+				{ "Vkkey": "HBBTV_VK_3" }
+			]
+		};
+		sendWIxPCommand(JAPITObjForWIXPSvc);
 
+	} catch (e) {
+		Logout("ExerciseModelInit() ERROR. " + e);
+	}
+	Logout("End ExerciseModelInit()");
 }
 
 
+
+function keyDownHandler(e) {
+	try {
+	Logout("Enter keyDownHandler keydown handler - key received " + e.keyCode + "  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	keyHandler(e.keyCode);
+	} catch (f) {
+		Logout("keyDownHandler() ERROR. " + f);
+	}
+	Logout("Exit keyDownHandler()");
+}
+
+function OnKeyReceivedHandler(event) {
+
+	try {
+		Logout("Enter onKeyReceived - key received " + event + " ******************************** \n");
+		var eventDetail = event.detail; //It contains key code and window ID                       
+		var eventval = eventDetail.split(',');
+		var keyStatus = parseInt(eventval[1]);
+		var keyCode = -1;
+
+		Logout("Enter OnKeyReceivedHandler keystatus : " + keyStatus + "  keycode : " + keyCode + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! \n");
+
+		keyCode = parseInt(eventval[0]);
+		Logout('OnKeyReceivedHandler(keyCode: ' + keyCode + ', Length: ' + eventval.length + ')');
+		if (keyStatus == 2) {
+			keyCode = parseInt(eventval[0]);
+			keyHandler(keyCode);
+		}
+
+	} catch (e) {
+		Logout("OnKeyReceiveHandler() ERROR. " + e.message);
+	}
+
+
+	// keyHandler(event);
+	Logout("Exit OnKeyReceivedHandler \n");
+}
+
+
+function keyHandler(keyCode) {
+
+	try {
+		Logout("Enter keyHandler - key received " + keyCode + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ");
+		switch (keyCode) {
+			case VK_1:
+				Logout("Received VK_1");
+				tuneFullscreen();
+				break;
+
+			case VK_2:
+				Logout("Received VK_2");
+				tunePIP();
+				break;
+
+			case VK_3:
+				Logout("Received VK_3");
+				UtilityRefreshPage();
+				break;
+
+			default:
+				break;
+		}
+	}
+	catch (e) {
+		Logout("keyHandler() ERROR. " + e);
+	}
+
+	Logout("Exit keyHandler()");
+}
 
 
 
@@ -101,7 +185,9 @@ function sendWIxPCommand(command) {
 		var WIXPJSONStringForm = JSON.stringify(command);
 		PrintLogsWIXPToTV(command);
 		Logout("sendWIxPCommand: " + WIXPJSONStringForm);
-		JAPITWIXPPlugin.WebIxpSend(WIXPJSONStringForm);
+		if (JAPITWIXPPlugin.WebIxpSend != undefined) {
+			JAPITWIXPPlugin.WebIxpSend(WIXPJSONStringForm);
+		}
 	}
 	catch (e) {
 		Logout("sendWIxPCommand ERROR. " + e);
@@ -164,14 +250,11 @@ function SetPictureSize(left, top, width, height, element) {
 		if (top == -1 || left == -1 || width == -1 || height == -1) {
 			Logout("set Fullscreen");
 
-			VideoDiv.style.width = "1080px";
-			VideoDiv.style.height = "720px";
-			VideoDiv.style.left = "200px";
+			VideoDiv.style.width = "100%";
+			VideoDiv.style.height = "100%";
+			VideoDiv.style.left = "0px";
 			VideoDiv.style.top = "0px";
 			VideoDiv.style.zIndex = 0;
-
-
-
 
 		} else {
 

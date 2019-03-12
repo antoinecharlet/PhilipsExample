@@ -18,7 +18,7 @@
 </head>
 
 <body onload="document.getElementById('ButtonRefreshPage').focus(); init()">
-	<div class="nav" tabindex="0">
+	<div id= "idNav" class="nav" tabindex="0">
 		<header>
 			<h1>Exercise10 RC</h1>
 		</header>
@@ -34,24 +34,26 @@
 		</div>
 	</div>
 
-	<div id="IDJAPITToTV_Misc" class="JAPITToTV_Misc">
-		<p id="IdHeadingLogMsg" class="IOContentsColor"> "WIXP (CDB --> TV) And Other Logs"</p>
-		<textarea id="logmsg" rows="50" cols="53" tabindex="1" style="resize:none" readonly></textarea>
+	<div id="container">
+		<div id="IDJAPITToTV_Misc" class="JAPITToTV_Misc">
+			<p id="IdHeadingLogMsg" class="IOContentsColor"> "WIXP (CDB --> TV) And Other Logs"</p>
+			<textarea id="logmsg" rows="50" cols="53" tabindex="1" style="resize:none" readonly></textarea>
+		</div>
+
+		<div id="IDJAPITFromTV" class="JAPITFromTV">
+			<p id="IdHeadingLogMsgCallback" class="IOContentsColor"> "WIXP (TV --> CDB)"</p>
+			<textarea id="logmsgcallback" rows="50" cols="53" tabindex="1" style="resize:none" readonly></textarea>
+		</div>
+
+		<div id="vidDiv" style="width:100%; height:100%; top:0; left:0; z-index:0; position: absolute; 	background-color:white;">
+			<object id="vidObject" style="position: absolute" type="video/broadcast" width="100%"
+				height="100%"></object>
+		</div>
+
+
+		<!-- WIXP object instantiation-->
+		<object style="visibility: hidden;" type="application/jswebixp" width="0" height="0" id="JAPITWIXPPlugin" />
 	</div>
-
-	<div id="IDJAPITFromTV" class="JAPITFromTV">
-		<p id="IdHeadingLogMsgCallback" class="IOContentsColor"> "WIXP (TV --> CDB)"</p>
-		<textarea id="logmsgcallback" rows="50" cols="53" tabindex="1" style="resize:none" readonly></textarea>
-	</div>
-
-	<div id="vidDiv" style="width:1080px; height:720px; top:0; left:200px; z-index:0; position: absolute">
-		<object id="vidObject" style="position: absolute" type="video/broadcast"  width="100%"  height="100%"></object>
-	</div>
-
-
-	<!-- WIXP object instantiation-->
-	<object style="visibility: hidden;" type="application/jswebixp" width="0" height="0" id="JAPITWIXPPlugin" />
-
 </body>
 
 </html>
