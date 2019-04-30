@@ -1,0 +1,121 @@
+<!-- This is a simple html page that will be displayed as a Custom Dashboard on a TV -->
+<!-- This can be reused in as is or even modified freely. -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC 
+"-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+	<head>
+		<meta http-equiv="content-type" content="application/ce-html+xml; charset=UTF-8"/>	
+		<link rel="stylesheet" type="text/css" href="ExerciseStyles.css" />
+
+		<script type="text/javascript" src="ExerciseController.js"></script>
+		<script type="text/javascript" src="ExerciseView.js"></script>
+		<script type="text/javascript" src="ExerciseModel.js"></script>
+		<script type="text/javascript" src="ExerciseUtility.js"></script>
+		<script type="text/javascript" src="FlashVsecureStatemachine.js"></script>
+		
+		<!-- Added By Rashmi for Spatial Navigation -->
+		<script src="spatnav-heuristic.js"></script>
+		<script src="spatnav-api.js"></script>
+		<script>focusNavigationHeuristics();</script>
+		<!-- End of Spatial Navigation Section-->
+
+	</head>
+
+	<body onload="document.getElementById('ButtonRefreshPage').focus(); init()">
+	<div class="row">
+		<div class="column">
+			<div class="nav">
+				<header>
+					<h1>I am Server</h1>
+					<h2>Version 700 - 17/1/19</h2>
+				</header>
+			
+				<button id="ButtonInfo" onclick="TVInfoRequest()">Get KeyStatus		</button> 
+				<button id="ButtonWeather" onclick="Weather()">ChannelList</button> <br>
+				<button id="ButtonAllKey" onclick="KeyChange()">SelectiveKeyFW</button> <br>
+				<button id="ButtonChannelList" onclick="GetChannelList()">IP_Elvis</button> <!--DirectTune1-->
+				<!--<button id="TuneButton" onclick="TuneFunction()">Remove CDB</button>
+				<button id="ButtonNoKey" onclick="NoKeyChange()">NoKEY_FW</button>-->
+				<button id="ButtonTune2" onclick="DirectTune2()">IP_Dobbit</button> <br>
+				<button class="button button1" id="ButtonTune2" onclick="DirectTune3()">IP_4</button>
+				<button id="ButtonTune2" onclick="DirectTune4()">IP_1</button>
+				<button id="ButtonTune2" onclick="DirectTune5()">R</button> <br>
+				<button id="ButtonTune2" onclick="Power()">Request PowerState</button> 
+				<!--<button id="ButtonTune2" onclick="RequestApps()">Change Volume</button> <br>
+				<button id="ButtonTune2" onclick="Stop()">V_Mute</button> 
+				<button id="ButtonTune2" onclick="Start()">V_UnMute</button> 
+				<button id="ButtonTune2" onclick="TuneToCh2()">Tune_CH2</button> 
+				<!--<button id="ButtonDIV" onclick="ShowDIV()">DIV</button> <br>
+				<!--<button id="FlashVSecKeys" onclick="startSetVsecureKeysProcedure()">Flash* VSec keys</button> <br>
+				<button id="ClearVSecKeys" onclick="clearKeys()">Clear VSec keys</button> <br>  
+				Last name: <input type="text" name="LastName" value="Mouse" onfocus="blur()" ><br>-->
+				
+				
+				<div class="PHILIPS_LOGO">
+					<button id="ButtonRefreshPage" onclick="UtilityRefreshPage()">Refresh Page</button> <br>
+					<button id="ButtonStress" onclick="TuneTest()">TuneTest</button> 				
+					<button id="ButtonStress2" onclick="Stress()">REBOOT</button> <br>	
+					<button id="ButtonToggleLogs" onclick="UtilityToggleLogsWindow()">Hide Logs</button> <br>
+					<button id="ButtonClearLogs" onclick="UtilityClearLogsWindow()">Clear Logs</button> <br>
+					<img src="PhilipsLogo.png" height="75" width="175"> </img>
+				</div>
+			</div>
+		</div>
+
+		<div class="column">
+			<div id="IDJAPITToTV_Misc" class="JAPITToTV_Misc">
+				<p id="IdHeadingLogMsg" class="IOContentsColor"> "WIXP (CDB --> TV) And Other Logs"</p>
+				<textarea id="logmsg" rows="65%" cols="55%" style="resize:none" readonly></textarea>
+			</div>
+		</div>
+		
+		<div class="column">
+			<div id="IDJAPITFromTV" class="JAPITFromTV">
+				<p id="IdHeadingLogMsgCallback" class="IOContentsColor"> "WIXP (TV --> CDB)"</p>
+				<textarea id="logmsgcallback" rows="65%" cols="55%" style="resize:none" readonly></textarea>
+			</div>
+		</div>
+		
+		<div class="column">
+			<div id="DivIO" class="InputOutput">
+				<p class="IOContentsColor" style="font-size:24px; color:blue"> =====>TV Info<=====</p>
+				<p id="IdDateText" class="IOContentsColor"> Current System Date: </p>
+				<p id="IdTimeText" class="IOContentsColor"> Current System Time: </p>
+				<p id="IdLinuxDateTime" class="IOContentsColor"> Linux Date Time: </p>
+				
+				<!--
+				<p class="IOContentsColor"> Enter System Date: 
+				<!-- <input value="2013-5-5T21:10:00" type="datetime-local"> </input> <br> 
+				<input id="IdDateInputText" value="5/5/2013" type="text"> </input> <br>
+				</p>
+				
+				<p class="IOContentsColor"> Enter System Time: 
+				<input id="IdTimeInputText" value="21:10:00" type="text"> </input> <br>
+				</p>-->
+				<p id="IdMainFirmwareVersion" class="IOContentsColor"> MainFirmware Version:  </p>
+				<p id="IdTVSettingsVersion" class="IOContentsColor"> TVSettings Version/Identifier:  </p>
+				<p id="IdTVChannelListVersion" class="IOContentsColor"> TVChannelList Version/Identifier:  </p>
+				<p id="IdIPAddress" class="IOContentsColor"> IPAddress:  </p>
+				<p id="IdRoomID" class="IOContentsColor"> RoomID:  </p>
+				<p id="IdSerial" class="IOContentsColor"> Serial:  </p>
+				<p id="IdModel" class="IOContentsColor"> Model:  </p>
+				<p id="IdLogo" class="IOContentsColor"> Logo:  </p>
+				<img id="IdChannelLogo" src="PhilipsLogo.png" height="320" width="475"> </img>
+				<p id="IdUA" class="IOContentsColor" rows="70%" cols="55%" style="resize:none" readonl> UA:  </p>
+				
+				<!--
+				<video width="640" height="264" controls autoplay>
+					<source src="http://clappr.io/highline.mp4" type="video/mp4">
+				</video>-->
+			</div>
+		</div>
+		
+		<!-- WIXP object instantiation-->
+		<object style="visibility: hidden;" type="application/jswebixp" width="0" height="0" id="JAPITWIXPPlugin" /> 
+		
+	</body> 
+</html>

@@ -1,0 +1,49 @@
+const ChannelLogo = "ChannelLogo: "; 
+var setVsecureKeysProcedureState = "idle";
+var oddKey = "1d4a2da288a1686e7ab3ab81de12cb14";
+var evenKey = "bcd45d673d15444751580c5b0f5255e5";
+var sharedKeysMap = {"800000000000000f4da9":"55c088efe9904e6e4811163229b4a84d22a8d92af6eb5c800e05dd46b39eebdff4b7515477de7043a0df9d1378ea49950c9919302dc773be1972c423468f5b68ac1b467eadde95c73b7dbc2e307fbfbbbde92143f31fb8a56e5f65912a727737a90e1ff606fdc32a72119dbd0570bfcaf7400ac0339d90a8c3d01d5c15f3539be5d4e7eb0a553c08a8830697c0f3a12a90b43aaeefe53e7fffd8e4c3675b0c0b55679000391123be36ce0691f97c306d6ac74d6be70102dcdd92e1b4239615101cfbd0184ecc0abb114f444ef3c02af17dfd56457312d4ede8dc937ec9fb8e54b65af498c396eb0de18088dfb6aa51d39fe21ca2e7b35d93685bbfde40452a61",
+"800000000000000F4DB8":"6a38094895d74e1e862c31625fa2f7c5c1236d99f26e2b2cc655b15e1c5960a7ddc1378e8b916eebb87d0517ca0fb9dc15719d1432bfaf87112c98806bc91586aef88d36489c64ecee237035993fcf94de32d0acac99d85c2d18b04dc24d92acbbb507e5190f2c3eae3d965697626c4c880fb38bc946763341a8cb1c918d4d727f9a9433de8be9cec7d85fc28cd84a6de35e010b3190c9245f046d8858498d615170f6b85eca7a640bb275f2848b608c98a3cef1a20cadb11f461e3781380716256b4bdc49caeeb3f1377ae3372084c9d74e692c1d28856023531645124ba2c55a75a92ab2199e3452e4d8d050621c8e39b4981c1a3d4e7105ba3b459e2f309e",
+"800000000000000f4dd3": "cbee5b4ca0182c2b0139e25c9d035de1d278d646b410c0503068e316aa434ccb325a65b5bce14df0ca28b09f5bfa227cb3c6f04a81c541678c0f1a64501798e771083569717fd9a793ad2170d2e30fd7247bdd54d4e6bf4aabb2de3c5fdd0d3de423738b9c21e385564e8d62edb5b7cbdd8db717dc5b0a56ac5fa3bdb46d94efa6d536a3e1b49ef1f90706733752b9e17689fb23dfc68411421f86793aefbb4f1ef06c4302d63c8f5ae17143526e97a5f8661558f9616804e6d6ed272b2a8ab066798332653633779ac60b11df85a0142ff02de59f08701cb05a86d13f6f48f47bbbe60580bcd92cd6e7083475e871a0e4bd3f26eee7c08fdbe237bd214a7d71",
+"8000000000000F4DCD":"4a52e7bf45e23d994057c07c1bb7d124905c870ec76924c75810c0fed6414947578496358f91843fe2567a87c23d7266f7fac5a40a2e79baf09d7b26aa764f9012d54ebc023462963cd5e21cd823237db1d2f92f1bda317695e50979724f0f6a6a53d5447a7130f829e44a9214198dd11d3f6fa6e5fb07d49eeb99a6cf29f1445d48daec5b278d4306ca1d20ffd589090619cc1da47e1a8fa2cdf5b0f094f4967f38484d9b16b0c772104c7d41ba0233bc2874f2bb5ef60c44ce6db4c27fb0b5f21927dc31932ff83b422c303fe03c5c1e4eaab07d7a6572d55c65cf40500d8dad9379e3f5e80742e1ceca5d51143e390bcd58a9e4b3b6ea9892d2170875179d"};
+
+function HandleVsecureResponse(WIXPJsonResponse)
+{
+	PrintLogsWIXPToTV("HandleVsecureResponse handler");
+	
+	
+	var tvVsecureIdetifier;
+	var tvVsecureIdentifierKeys;
+	var sharedKey;
+	
+	
+	
+	try{
+		if(setVsecureKeysProcedureState == "flash")
+		{
+			tvVsecureIdetifier = WIXPJsonResponse.CommandDetails.VSecureTVData.VSecureTVIdentifier;
+			tvVsecureIdentifierKeys = Object.keys(sharedKeysMap);
+			tvVsecureIdentifierKeys.forEach(function(tvVsecureIdentifierKey) {
+				if(tvVsecureIdetifier.toLowerCase() == tvVsecureIdentifierKey.toLowerCase())
+				{
+					sharedKey = sharedKeysMap[tvVsecureIdentifierKey];
+					setKeys(sharedKey, oddKey, evenKey);
+					setVsecureKeysProcedureState = "idle";
+				}
+				else
+				{
+					//PrintLogsWIXPToTV("TVVsecureIdentifier not found. Tested Identifier = " + tvVsecureIdentifierKey+ " TVVsecureIdentifier to find = " + tvVsecureIdetifier);
+				}
+			});
+		}
+	}
+	catch (e) {
+		alert(e);
+	}
+}
+
+function startSetVsecureKeysProcedure()
+{
+	getKeys();
+	setVsecureKeysProcedureState = "flash";
+}

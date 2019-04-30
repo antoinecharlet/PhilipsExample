@@ -20,11 +20,13 @@
 <body onload="document.getElementById('ButtonRefreshPage').focus(); init()">
 	<div id= "idNav" class="nav" tabindex="0">
 		<header>
-			<h1>Exercise10 RC</h1>
+			<h1>Exercise12 StopChannel</h1>
 		</header>
 
-		<button id="idFullscreen" onclick="tuneFullscreen();">Fullscreen</button><br><br />
-		<button id="idPip" onclick="tunePIP();">PIP</button>
+		<button onclick="tuneChannelOne(true);">Stop and Tune 1</button><br><br />
+        <button onclick="tuneChannelTwo(true);">Stop and Tune 2</button><br><br />
+        <button onclick="tuneChannelOne(false);">Tune 1</button><br><br />
+        <button onclick="tuneChannelTwo(false);">Tune 2</button><br><br />
 
 		<div class="PHILIPS_LOGO">
 			<button id="ButtonRefreshPage" onclick="UtilityRefreshPage()">Refresh Page</button> <br>
