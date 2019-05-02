@@ -24,7 +24,7 @@ var urlChannelTwo = "multicast://229.0.14.9:11022/0/0/0";
 
 function ExerciseModelInit() {
 	Logout("Start ExerciseModelInit()");
-    var JAPITObjForWIXPSvc
+	var JAPITObjForWIXPSvc;
 	try {
 		Logout("Start ExerciseModelInit()");
 		// Register Callback
@@ -32,9 +32,9 @@ function ExerciseModelInit() {
 		if (vidObject.bindToCurrentChannel != undefined) {
 			vidObject.bindToCurrentChannel();
 		}
-		
-       
-        JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
+
+
+		JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 		JAPITObjForWIXPSvc.CmdType = "Change";
 		JAPITObjForWIXPSvc.Fun = "UserInputControl";
 		JAPITObjForWIXPSvc.CommandDetails = {
@@ -47,8 +47,8 @@ function ExerciseModelInit() {
 		};
 		sendWIxPCommand(JAPITObjForWIXPSvc);
 
-        tuneChannelOne(false);
-        
+		tuneChannelOne(false);
+
 	} catch (e) {
 		Logout("ExerciseModelInit() ERROR. " + e);
 	}
@@ -59,8 +59,8 @@ function ExerciseModelInit() {
 
 function keyDownHandler(e) {
 	try {
-	Logout("Enter keyDownHandler keydown handler - key received " + e.keyCode + "  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	keyHandler(e.keyCode);
+		Logout("Enter keyDownHandler keydown handler - key received " + e.keyCode + "  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		keyHandler(e.keyCode);
 	} catch (f) {
 		Logout("keyDownHandler() ERROR. " + f);
 	}
@@ -106,7 +106,7 @@ function keyHandler(keyCode) {
 				break;
 
 			case VK_2:
-                Logout("Received VK_2");
+				Logout("Received VK_2");
 				tuneChannelTwo(true);
 				break;
 
@@ -119,7 +119,7 @@ function keyHandler(keyCode) {
 				Logout("Received VK_3");
 				tuneChannelTwo(false);
 				break;
-                
+
 			case VK_5:
 				Logout("Received VK_3");
 				UtilityRefreshPage();
@@ -144,9 +144,11 @@ function WIXPResponseHandler(WIXPResponseJSON) {
 
 
 	try {
-		dataToPass = JSON.parse(WIXPResponseJSON);
-		PrintLogsWIXPFromTV(dataToPass);
-
+		Logout("WIXPResponseHandler(#1)");
+		var dataToPass = JSON.parse(WIXPResponseJSON);
+		Logout("WIXPResponseHandler(#2)");
+		//PrintLogsWIXPFromTV(dataToPass);
+		Logout("WIXPResponseHandler(#3)");
 		if (dataToPass.Fun == "ChannelSelection") {
 			if (dataToPass.CommandDetails.ChannelSelectionStatus != undefined) {
 
@@ -213,11 +215,11 @@ function tuneChannelOne(fStop) {
 	Logout("tuneChannelOne(" + fStop + ")");
 
 	try {
-        if (fStop == true) {
-            stopCurrentChannel();
-        }
-		
-        var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
+		if (fStop == true) {
+			stopCurrentChannel();
+		}
+
+		var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 		JAPITObjForWIXPSvc.CmdType = "Change";
 		JAPITObjForWIXPSvc.Fun = "ChannelSelection";
 		JAPITObjForWIXPSvc.CommandDetails = { "ChannelTuningDetails": { "URL": urlChannelOne } };
@@ -232,11 +234,11 @@ function tuneChannelTwo(fStop) {
 	Logout("tuneChannelTwo(" + fStop + ")");
 
 	try {
-        if (fStop == true) {
-            stopCurrentChannel();
-        }
-		
-        var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
+		if (fStop == true) {
+			stopCurrentChannel();
+		}
+
+		var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 		JAPITObjForWIXPSvc.CmdType = "Change";
 		JAPITObjForWIXPSvc.Fun = "ChannelSelection";
 		JAPITObjForWIXPSvc.CommandDetails = { "ChannelTuningDetails": { "URL": urlChannelTwo } };

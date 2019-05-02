@@ -6,10 +6,12 @@
 
 /* a function to initialize our module */
 function init(){
+	
+	SetupUserAgent();
 	Logout("Enter init");
 	Exercise01ModelInit();
 	Exercise01ViewInit();
-	UtilityInit();f
+	UtilityInit();
 	
 	// Below function is added for UserInputs
 	setTimeout(function() {

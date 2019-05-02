@@ -5,6 +5,8 @@
 *
 */
 
+var CurrentTuningParameters;
+
 function Exercise01ModelInit() {
 	RegisterCallbacks();
 	//AllKeyForward();
@@ -23,7 +25,7 @@ function RegisterCallbacks() {
 
 /* this function will call the required function depending on the response received from the TV */
 function WIXPResponseHandler(WIXPResponseJSON) {
-	Logout("Enter WIXPResponseHandler");
+	Logout("Enter WIXPResponseHandler \n");
 	try {
 		parsedWIXPJSON = JSON.parse(WIXPResponseJSON);
 		PrintLogsWIXPFromTV(parsedWIXPJSON);
@@ -47,7 +49,7 @@ function WIXPResponseHandler(WIXPResponseJSON) {
 		//	HandleChannelSelectionResponse(parsedWIXPJSON);	
 
 		else {
-			Logout("Do nothing !!");
+			Logout("Do nothing !! \n");
 		}
 	} catch (e) {
 		alert(e);
@@ -58,20 +60,15 @@ function WIXPResponseHandler(WIXPResponseJSON) {
 
 /* function to send commands to TV */
 function sendWIxPCommand(command) {
-	Logout("Enter sendWIxPCommand");
+	//Logout("Enter sendWIxPCommand");
 	try {
-		/* // Hirschmann issue 	TF415PHIEUMTK66-2239
-		PrintLogsWIXPToTV(typeof(JAPITWIXPPlugin));
-		PrintLogsWIXPToTV(typeof(JAPITWIXPPlugin.WebIxpSend));
-		PrintLogsWIXPToTV(typeof(JAPITWIXPPlugin.WebIXPOnReceive)); 
-		*/
 		var WIXPJSONStringForm = JSON.stringify(command);
 		Logout(WIXPJSONStringForm);
 		PrintLogsWIXPToTV(command);
 		if (JAPITWIXPPlugin.WebIxpSend != undefined) {
 			JAPITWIXPPlugin.WebIxpSend(WIXPJSONStringForm);
 		}
-		Logout("Exit sendWIxPCommand");
+		//Logout("Exit sendWIxPCommand \n");
 	}
 	catch (e) {
 		alert("ERROR in sendWIxPCommand(). " + e );
@@ -87,7 +84,7 @@ function CreateJAPITObjectForWIXPSvc() {
 
 /* a function to send a "Request" command to the TV to get the system date and time */
 function getSystemDate() {
-	Logout("Enter getSystemDate");
+	Logout("Enter getSystemDate \n");
 	var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 	JAPITObjForWIXPSvc.Cookie = 1050;
 	JAPITObjForWIXPSvc.CmdType = "Request";
@@ -104,7 +101,7 @@ function getSystemDate() {
 
 /* a function to send a "Request" command to the TV to get the ProfessionalSettings */
 function getProfessionalSettings() {
-	Logout("Enter getSystemDate");
+	Logout("Enter getSystemDate \n");
 	var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 	JAPITObjForWIXPSvc.Cookie = 1051;
 	JAPITObjForWIXPSvc.CmdType = "Request";
@@ -147,7 +144,7 @@ function MyChoiceRequest() {
 
 // Function to set RawWIXP server
 function setRawWIXP() {
-	Logout("Enter getSystemDate");
+	Logout("Enter getSystemDate \n");
 	var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 	JAPITObjForWIXPSvc.Cookie = 1051;
 	JAPITObjForWIXPSvc.CmdType = "Change";
@@ -165,7 +162,7 @@ function setRawWIXP() {
 
 /* a function to send a "Change" command to the TV to set the system date and time */
 function setSystemDate(newDate, newTime) {
-	Logout("Enter setSystemDate");
+	Logout("Enter setSystemDate \n");
 	var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 	JAPITObjForWIXPSvc.Cookie = 1060;
 	JAPITObjForWIXPSvc.CmdType = "Change";
@@ -383,7 +380,29 @@ function IPTuning(url) {
 			"URL": url,
 		}
 	};
+	CurrentTuningParameters = JAPITObjForWIXPSvc.CommandDetails;
 	sendWIxPCommand(JAPITObjForWIXPSvc);
+}
+
+function stopCurrentChannel()	{
+	Logout("stopCurrentChannel()");
+
+	try {
+		var ParameterObj;
+
+		if (CurrentTuningParameters != undefined) {
+			var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
+			JAPITObjForWIXPSvc.CmdType = "Change";
+			JAPITObjForWIXPSvc.Fun = "ChannelSelection";
+			JAPITObjForWIXPSvc.CommandDetails = CurrentTuningParameters;
+			JAPITObjForWIXPSvc.CommandDetails.ChannelTuningDetails.TrickMode = "Stop";
+			sendWIxPCommand(JAPITObjForWIXPSvc);
+
+		}
+	} catch (e) {
+		Logout("stopCurrentChannel() ERROR. " + e.message);
+	}
+
 }
 
 function IPTuningStop(url) {
@@ -395,7 +414,6 @@ function IPTuningStop(url) {
 	JAPITObjForWIXPSvc.CommandDetails = {
 		"ChannelTuningDetails": {
 			"URL": url,
-			//"ChannelNumber": 1,
 		},
 		"TrickMode": "Stop"
 
@@ -473,7 +491,7 @@ function AudioMute(state) {
 
 
 function setSubtitleLang() {
-	Logout("Enter setSubtitleLang");
+	Logout("Enter setSubtitleLang \n");
 	var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 
 	JAPITObjForWIXPSvc.Cookie = 2060;
@@ -488,7 +506,7 @@ function setSubtitleLang() {
 }
 
 function getSubtitleLang() {
-	Logout("Enter getSubtitleLang");
+	Logout("Enter getSubtitleLang \n");
 	var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 
 	JAPITObjForWIXPSvc.Cookie = 2060;
@@ -499,7 +517,7 @@ function getSubtitleLang() {
 }
 
 function removeSubtitles() {
-	Logout("Enter Subs OFF");
+	Logout("Enter Subs OFF \n");
 	var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 
 	JAPITObjForWIXPSvc.Cookie = 2060;
@@ -513,7 +531,7 @@ function removeSubtitles() {
 }
 
 function getAudioLang() {
-	Logout("Enter getAudioLang");
+	Logout("Enter getAudioLang \n");
 	var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 
 	JAPITObjForWIXPSvc.Cookie = 2061;
@@ -780,7 +798,7 @@ function WeatherRequest() {
 }
 
 function changeCDBstate(state) {
-	Logout("ActivateCustomDashBoard to " + state );
+	Logout("ActivateCustomDashBoard to " + state + " \n");
 
 	var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 	JAPITObjForWIXPSvc.Cookie = 1090;
@@ -1141,7 +1159,7 @@ function InstallChannelTestIndranil() {
 /*  a function to get the number of channels that exist on the TV by sending a WIXP command with the required details  */
 function GetNumberOfChannelsInTV() {
 
-	PrintLogsWIXPToTV("Enter GetNumberOfChannelsInTV");
+	PrintLogsWIXPToTV("Enter GetNumberOfChannelsInTV \n");
 	var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 
 	JAPITObjForWIXPSvc.Cookie = 1050;
@@ -1158,13 +1176,13 @@ function GetNumberOfChannelsInTV() {
 	};
 
 	sendWIxPCommand(JAPITObjForWIXPSvc);
-	Logout("Exit GetNumberOfChannelsInTV");
+	Logout("Exit GetNumberOfChannelsInTV \n");
 }
 
 /*  a function to get the channels details from the TV by sending a WIXP command with the required details  */
 function requestChannelsFromTV(start) {
 
-	Logout("Enter requestChannelsFromTV");
+	Logout("Enter requestChannelsFromTV \n");
 	var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 
 	JAPITObjForWIXPSvc.Cookie = 1055;
@@ -1181,7 +1199,7 @@ function requestChannelsFromTV(start) {
 
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 
-	Logout("Exit requestChannelsFromTV");
+	Logout("Exit requestChannelsFromTV \n");
 }
 
 // AUDIOCONTROL
@@ -1555,10 +1573,10 @@ function CustomKeysForward() {
 }
 
 function keyDownHandler(e) {
-	Logout("Enter keyDownHandler keydown handler - key received " + e.keyCode );
+	Logout("Enter keyDownHandler keydown handler - key received " + e.keyCode + "  \n");
 	PrintLogsWIXPToTV("keydown");
 	keyHandler(e.keyCode);
-	Logout("Exit keyDownHandler");
+	Logout("Exit keyDownHandler \n");
 }
 
 function OnKeyReceivedHandler(event) {
@@ -1569,32 +1587,32 @@ function OnKeyReceivedHandler(event) {
 	var keyStatus = parseInt(eventval[1]);
 	var keyCode = -1;
 
-	Logout("Enter OnKeyReceivedHandler keystatus : " + keyStatus + "  keycode : " + keyCode);
+	Logout("Enter OnKeyReceivedHandler keystatus : " + keyStatus + "  keycode : " + keyCode + "\n");
 
 	if (keyStatus == 2) {	// change to 0 for MSAF
 		//if(keyStatus == 0){
 		keyCode = parseInt(eventval[0]);
-		Logout("OnKeyReceivedHandler Camehere1");
+		Logout("OnKeyReceivedHandler Camehere1 \n");
 		//var str = JSON.stringify(event); //JSON.stringify(event, null, 4);
-		Logout("keystatus : " + keyStatus + "  keycode : " + keyCode);
-		Logout(" eventval : " + event);
+		Logout("keystatus : " + keyStatus + "  keycode : " + keyCode + "\n");
+		Logout(" eventval : " + event + " \n");
 		keyHandler(keyCode);
-		Logout("OnKeyReceivedHandler Camehere2");
+		Logout("OnKeyReceivedHandler Camehere2 \n");
 	}
 	else {
-		Logout("OnKeyReceivedHandler Camehere3");
-		Logout("keystatus : " + keyStatus + "  keycode : " + keyCode);
-		Logout(" eventval : " + event);
-		Logout("OnKeyReceivedHandler Camehere4");
+		Logout("OnKeyReceivedHandler Camehere3 \n");
+		Logout("keystatus : " + keyStatus + "  keycode : " + keyCode + "\n");
+		Logout(" eventval : " + event + " \n");
+		Logout("OnKeyReceivedHandler Camehere4 \n");
 	}
 
 	// keyHandler(event);
-	Logout("Exit OnKeyReceivedHandler");
+	Logout("Exit OnKeyReceivedHandler \n");
 }
 
 
 function keyHandler(keyCode) {
-	Logout("Enter keyHandler - key received " + keyCode + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	Logout("Enter keyHandler - key received " + keyCode + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! \n");
 	PrintLogsWIXPToTV("key:" + keyCode);
 	try {
 		switch (keyCode) {
@@ -1780,7 +1798,7 @@ function keyHandler(keyCode) {
 				break;
 
 			default:
-				Logout("Nothing to handle");
+				Logout("Nothing to handle \n");
 				//PrintLogsWIXPToTV("Key Not FOUND");
 				break;
 		}
@@ -1789,5 +1807,5 @@ function keyHandler(keyCode) {
 		alert(e);
 	}
 
-	Logout("Exit keyHandler");
+	Logout("Exit keyHandler \n");
 }

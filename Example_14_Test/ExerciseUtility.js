@@ -36,6 +36,22 @@ function UtilityRefreshPage(){
 	window.location.reload(true);
 }
 
+function SetupUserAgent() {
+	try {
+		Logout("SetupUserAgent()");
+		if (navigator.userAgent.toUpperCase().match('PHILIPS')) {
+			fAlertLog = true;
+			//var idNav = document.getElementById("idNav");
+			//idNav.style.visibility = "hidden";
+		} else {
+			//var videoDiv = document.getElementById("vidDiv");
+			//videoDiv.style.backgroundColor = "white";
+		}
+	} catch (e) {
+		window.alert("SetupUserAgent() ERROR. " + e);
+	}
+}
+
 /* a function to showLogs the page */
 function UtilityToggleLogsWindow(){
 	if(document.getElementById('logmsgcallback').style.visibility == "hidden")

@@ -5,8 +5,11 @@
 */
 
 body{
-	
-	background-color: rgba(0,0,0,.75);
+	height:1080px;
+	width:1920px;
+	/* height:720px; */
+	/* width:1280px;  */
+	background-color: rgba(0,0,0,.35);
 	margin-top: 0px; 
 	margin-bottom: 0px; 
 	margin-left: 0px; 
