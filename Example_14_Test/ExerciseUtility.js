@@ -6,8 +6,10 @@
 */
 
 /* a function to refresh the page */
+/*jshint esversion: 6 */
 
 var fAlertLog = false;
+var fDebugVisible= true;
 
 
 function UtilityInit(){
@@ -106,4 +108,16 @@ function PrintLogsWIXPFromTV(Log)
 	
 	document.getElementById("logmsgcallback").value += '\n' + FormattedJSON + '\n';
 	document.getElementById("logmsgcallback").scrollTop=document.getElementById("logmsgcallback").scrollHeight;
+}
+
+function toggleDebugScreen() {
+	Logout("toggleDebugScreen()");
+	var myId= document.getElementById("idDebugScreen");
+	if (fDebugVisible)	{
+		myId.style.visibility= "hidden";
+		fDebugVisible= false;
+	} else {
+		myId.style.visibility= "visible";
+		fDebugVisible= true;
+	}
 }

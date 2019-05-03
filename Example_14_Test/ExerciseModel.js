@@ -4,7 +4,7 @@
 * This can be reused in as is or even modified freely.
 *
 */
-
+/*jshint esversion: 6 */
 var CurrentTuningParameters;
 
 function Exercise01ModelInit() {
@@ -185,7 +185,7 @@ function getCloneInformation() {
 	JAPITObjForWIXPSvc.Fun = "UpgradeControl";
 	JAPITObjForWIXPSvc.CommandDetails = {
 		"UpgradeControlRequestParameters": ["CurrentMainSoftwareVersion", "CurrentCloneVersions"]
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 	delete JAPITObjForWIXPSvc;
 }
@@ -198,7 +198,7 @@ function getKeys() {
 	JAPITObjForWIXPSvc.CommandDetails = {
 		//"VSecureStatus": [ "VSecureKeyStatus" ]
 		"VSecureStatus": ["VSecureKeyStatus", "VSecureTVData"]
-	}
+	};
 	//JSON.stringify(JAPITObjForWIXPSvc)
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 	delete JAPITObjForWIXPSvc;
@@ -215,7 +215,7 @@ function clearKeys() {
 		"VSecureKeyChangeDetails": {
 			"ClearKeys": ["All"]
 		}
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 	delete JAPITObjForWIXPSvc;
 }
@@ -234,7 +234,7 @@ function setKeys(sharedKey, oddKey, evenKey) {
 				"EvenKey": evenKey
 			}
 		}
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 	delete JAPITObjForWIXPSvc;
 }
@@ -254,7 +254,7 @@ function setKeysKjellProdTV() {
 				"EvenKey": "bcd45d673d15444751580c5b0f5255e5"
 			}
 		}
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 	delete JAPITObjForWIXPSvc;
 }
@@ -273,7 +273,7 @@ function setKeysPieterDevTV() {
 				"EvenKey": "bcd45d673d15444751580c5b0f5255e5"
 			}
 		}
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 	delete JAPITObjForWIXPSvc;
 }
@@ -292,7 +292,7 @@ function setKeysKjellDevTV() {
 				"EvenKey": "bcd45d673d15444751580c5b0f5255e5"
 			}
 		}
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 	delete JAPITObjForWIXPSvc;
 }
@@ -310,7 +310,7 @@ function setKeysPieter() {
 				"EvenKey": "bcd45d673d15444751580c5b0f5255e5"
 			}
 		}
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 	delete JAPITObjForWIXPSvc;
 }
@@ -330,7 +330,7 @@ function setKeysNew() {
 				"EvenKey": "bcd45d673d15444751580c5b0f5255e5"
 			}
 		}
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 	delete JAPITObjForWIXPSvc;
 }
@@ -349,7 +349,7 @@ function setKeys_OLD() {
 				"EvenKey": "839c075b9139850fb40987ea9dda96fe"
 			}
 		}
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 	delete JAPITObjForWIXPSvc;
 }
@@ -586,7 +586,7 @@ function RequestApplicationControl2() {
 				"Filter": ["Native", "NonNative"]
 				//"Filter": [ "Native"]
 			},
-		}
+		};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 }
 
@@ -701,7 +701,7 @@ function RequestMiracast() {
 					"ApplicationName": "Miracast"
 				}
 			]
-		}
+		};
 
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 }
@@ -953,7 +953,7 @@ function ChangeSwitchOn() {
 			//}
 			//xxx
 		}
-	}
+	};
 
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 }
@@ -966,7 +966,7 @@ function ChangeSwitchOnSource() {
 	JAPITObjForWIXPSvc.Fun = "ProfessionalSettingsControl";
 	JAPITObjForWIXPSvc.CommandDetails = {
 		"SwitchOnSource": "HDMI1"
-	}
+	};
 
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 }
@@ -983,7 +983,7 @@ function RequestChannelList() {
 		"Loop": "No",
 		"NumberOfChannels": 1,
 		"Filter": ["ALL"]
-	}
+	};
 
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 }
@@ -1211,7 +1211,7 @@ function GetVolume() {
 	JAPITObjForWIXPSvc.Fun = "AudioControl";
 	JAPITObjForWIXPSvc.CommandDetails = {
 		"AudioControlParameters": ["Volume"]
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 }
 
@@ -1224,7 +1224,7 @@ function SetVolume(volume) {
 	JAPITObjForWIXPSvc.Fun = "AudioControl";
 	JAPITObjForWIXPSvc.CommandDetails = {
 		"Volume": volume
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 }
 
@@ -1255,7 +1255,7 @@ function SetVolumeDestination(volume) {
 				"SmartSound": "Game"
 			}
 		]
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 }
 
@@ -1268,7 +1268,7 @@ function AllKeyForward() {
 	JAPITObjForWIXPSvc.Fun = "UserInputControl";
 	JAPITObjForWIXPSvc.CommandDetails = {
 		"VirtualKeyForwardMode": "AllVirtualKeyForward"
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 }
 
@@ -1280,7 +1280,7 @@ function NoKeyForward() {
 	JAPITObjForWIXPSvc.Fun = "UserInputControl";
 	JAPITObjForWIXPSvc.CommandDetails = {
 		"VirtualKeyForwardMode": "DontForwardAnyVirtualKey"
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 }
 
@@ -1387,7 +1387,7 @@ function SelectiveKeyForward() {
 			}
 
 		]
-	}
+	};
 	/*
 	JAPITObjForWIXPSvc.CommandDetails = {	
 		"VirtualKeyForwardMode" : "SelectiveVirtualKeyForward",
@@ -1568,7 +1568,7 @@ function CustomKeysForward() {
 				"MapToVirtualKey": "HBBTV_VK_EXTERNAL_6"
 			}
 		]
-	}
+	};
 	sendWIxPCommand(JAPITObjForWIXPSvc);
 }
 
@@ -1612,7 +1612,8 @@ function OnKeyReceivedHandler(event) {
 
 
 function keyHandler(keyCode) {
-	Logout("Enter keyHandler - key received " + keyCode + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! \n");
+	Logout("Enter keyHandler - key received " + keyCode + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	Logout("KeyCode of VK_GREEN: " + VK_GREEN);
 	PrintLogsWIXPToTV("key:" + keyCode);
 	try {
 		switch (keyCode) {
@@ -1797,8 +1798,14 @@ function keyHandler(keyCode) {
 				PrintLogsWIXPToTV("VK_Menu_NEW");
 				break;
 
+			case VK_GREEN:
+				// enable/disable Excercise
+				toggleDebugScreen();
+				break;
+
 			default:
-				Logout("Nothing to handle \n");
+				Logout("Nothing to handle");
+				Logout("KeyCode of VK_GREEN: " + VK_GREEN);
 				//PrintLogsWIXPToTV("Key Not FOUND");
 				break;
 		}
@@ -1807,5 +1814,5 @@ function keyHandler(keyCode) {
 		alert(e);
 	}
 
-	Logout("Exit keyHandler \n");
+	Logout("Exit keyHandler");
 }

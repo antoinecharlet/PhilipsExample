@@ -1,10 +1,14 @@
+/*jshint esversion: 6 */
+
 // URLs for TESTING here:
 // fill in URLs for testing here:
+
+
 var url1 = "multicast://227.0.11.1:11022/0/0/0";	// TV1 ARD
 var url2 = "multicast://227.0.14.9:11022/0/0/0";	// TV2 ZDV
 var url3 = "multicast://227.0.14.1:11022/0/0/0";	// TV3 arte
 var url4 = "multicast://228.0.1.10:11022/0/0/0";	// Acentic info channel
-var url5 = "multicast://228.0.1.5:11022/0/0/0";		// Video 
+var url5 = "multicast://228.0.1.4:11022/0/0/0";		// Video 
 var urlradch1 = "multicast://239.232.223.211:50000/0/0/0";	// RadioTelenet
 
 /* 
@@ -25,9 +29,12 @@ var IdSSBSettingsVersion;
 var IdChannelTableVersion;
 
 var SequenceState = 0;
-var SequenceTimer;
+var SequenceInterval;
 
 var startTest = 0;
+var videoObject;
+
+
 
 const SysTime = "Current System Date: ";
 const SysDate = "Current System Time: ";
@@ -53,15 +60,34 @@ function Exercise01ViewInit() {
 }
 
 function CreateHTMLElements() {
-	IdDateText = document.getElementById("IdDateText");
-	IdTimeText = document.getElementById("IdTimeText");
-	IdLinuxDateTime = document.getElementById("IdLinuxDateTime");
-	IdDateInputText = document.getElementById("IdDateInputText");
-	IdTimeInputText = document.getElementById("IdTimeInputText");
+	try {
+		IdDateText = document.getElementById("IdDateText");
+		IdTimeText = document.getElementById("IdTimeText");
+		IdLinuxDateTime = document.getElementById("IdLinuxDateTime");
+		IdDateInputText = document.getElementById("IdDateInputText");
+		IdTimeInputText = document.getElementById("IdTimeInputText");
 
-	IdMainFirmwareVersion = document.getElementById("IdMainFirmwareVersion");
-	IdTVSettingsVersion = document.getElementById("IdTVSettingsVersion");
-	IdTVChannelListVersion = document.getElementById("IdTVChannelListVersion");
+		IdMainFirmwareVersion = document.getElementById("IdMainFirmwareVersion");
+		IdTVSettingsVersion = document.getElementById("IdTVSettingsVersion");
+		IdTVChannelListVersion = document.getElementById("IdTVChannelListVersion");
+
+		// Create the videoobject. It will stay all the time
+		Logout("Sequence Command 0: Create VideoObj ");
+		videoObject = document.createElement("object");
+		videoObject.setAttribute('id', "idVideoObj");
+		videoObject.setAttribute('type', "video/broadcast");
+		videoObject.width = "100%";
+		videoObject.height = "100%";
+
+		document.getElementById("idVideoDiv").appendChild(this.videoObject);
+		if (this.videoObject.bindToCurrentChannel != undefined) {
+			Logout("Sequence Command 0: Bind to current channel");
+			this.videoObject.bindToCurrentChannel();
+		}
+		setPictureSize(-1, -1, -1, -1);
+	} catch (e) {
+		alert("CreateHTMLElements ERROR. " + e);
+	}
 }
 
 function DisplayUpgradeControl(WIXPJsonResponse) {
@@ -216,9 +242,21 @@ function DirectTune3(fStop) {
 	IPTuning(url3);
 }
 
-
 function AcenticSequence() {
-	Logout("Enter AcenticSequence()");
+	Logout("Call of ProcessAcenticSequence()");
+	try {
+		var toExecute= "ProcessAcenticSequence()";
+		var tmpFunc= new Function(toExecute);
+		tmpFunc();
+	} catch (e) {
+		alert("AcenticSequence ERROR. " + e);
+	}
+
+}
+
+
+function ProcessAcenticSequence() {
+	Logout("Enter ProcessAcenticSequence()");
 	var JAPITObjForWIXPSvc;
 
 
@@ -270,6 +308,10 @@ function AcenticSequence() {
 
 	// #################################################################
 	Logout("Sequence Command 4 - Tune to " + url4);
+
+
+	setPictureSize(600, 655, 720, 405);
+
 	JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 	JAPITObjForWIXPSvc.Cookie = 204;
 	JAPITObjForWIXPSvc.CmdType = "Change";
@@ -321,7 +363,10 @@ function AcenticSequence() {
 	sleep(25814);
 
 	// #################################################################
-	Logout("Sequence Command 8 - Tune to " + url5);
+	Logout("Sequence Command 8 - Tune Fullscreen to " + url5);
+
+	setPictureSize(-1, -1, -1, -1);
+
 	JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 	JAPITObjForWIXPSvc.Cookie = 208;
 	JAPITObjForWIXPSvc.CmdType = "Change";
@@ -469,6 +514,7 @@ function AcenticSequence() {
 }
 
 
+
 function sleep(milliseconds) {
 	var start = new Date().getTime();
 	for (var i = 0; i < 1e7; i++) {
@@ -522,4 +568,40 @@ function TuneTest() {
 		}
 		startTest++;
 	}, delay);
+}
+
+
+function setPictureSize(left, top, width, height) {
+
+	Logout("setPictureSize(" + left + ", " + top + ", " + width + ", " + height);
+	var myVideoDiv = document.getElementById("idVideoDiv");
+
+	try {
+
+
+		//this.__stopChannel();
+
+		if (top == -1 || left == -1 || width == -1 || height == -1) {
+
+			myVideoDiv.style.width = "1920px";
+			myVideoDiv.style.height = "1080px";
+			myVideoDiv.style.left = "0px";
+			myVideoDiv.style.top = "0px";
+			myVideoDiv.style.zIndex = 0;
+
+
+		} else {
+			myVideoDiv.style.width = width + "px";
+			myVideoDiv.style.height = height + "px";
+			myVideoDiv.style.left = left + "px";
+			myVideoDiv.style.top = top + "px";
+			myVideoDiv.style.zIndex = 1000;
+		}
+
+		// make it visible again
+		//myVideoDiv.style.visibility = "visible";
+
+	} catch (e) {
+		alert("setPictureSize() ERROR" + e.message);
+	}
 }
