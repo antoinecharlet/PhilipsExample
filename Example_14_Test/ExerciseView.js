@@ -29,7 +29,7 @@ var IdSSBSettingsVersion;
 var IdChannelTableVersion;
 
 var SequenceState = 0;
-var SequenceInterval;
+var SequenceTimer;
 
 var startTest = 0;
 var videoObject;
@@ -243,6 +243,49 @@ function DirectTune3(fStop) {
 }
 
 function AcenticSequence() {
+
+	SequenceTimer = window.setTimeout(ProcessAcenticSequence, 1000);
+
+}
+
+function ProcessAcenticSequence() {
+
+	var mySequence = Sequence[SequenceState];
+	var myCommand = JSON.parse(Sequence[SequenceState].Payload);
+	var Delay;
+	Logout("Execute: " + JSON.stringify(myCommand))
+
+
+	if (SequenceTimer != undefined) {
+		window.clearTimeout(SequenceTimer);
+	}
+	SequenceState++;
+	if (SequenceState < Sequence.length) {
+		Delay= Sequence[SequenceState].Delay;
+		Logout("Next command in: " + Delay + "ms");
+		window.setTimeout(ProcessAcenticSequence, Delay);
+	} else {
+		Logout("Sequence finished");
+	}
+
+}
+
+/*
+function AcenticSequence() {
+	var x,y;
+	for (i=0; i<Sequence.length; i++)	{
+		x= Sequence[i];
+		Logout("Timestamp[" + i + "]: " + x.Timestamp);
+		Logout("Delay[" + i + "]: " + x.Delay);
+		Logout("Protocol[" + i + "]: " + x.Protocol);
+		y= JSON.parse(x.Payload);
+		Logout("Function[" + i + "]: " + y.Fun);
+
+	}
+}
+*/
+/*
+function AcenticSequence() {
 	Logout("Call of ProcessAcenticSequence()");
 	try {
 		var toExecute= "ProcessAcenticSequence()";
@@ -253,8 +296,8 @@ function AcenticSequence() {
 	}
 
 }
-
-
+*/
+/*
 function ProcessAcenticSequence() {
 	Logout("Enter ProcessAcenticSequence()");
 	var JAPITObjForWIXPSvc;
@@ -277,7 +320,7 @@ function ProcessAcenticSequence() {
 	// #################################################################
 	Logout("Sequence Command 2 - Trickmode stop: " + url2);
 	JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
-	JAPITObjForWIXPSvc.Cookie = 202;f
+	JAPITObjForWIXPSvc.Cookie = 202; f
 	JAPITObjForWIXPSvc.CmdType = "Change";
 	JAPITObjForWIXPSvc.Fun = "ChannelSelection";
 	JAPITObjForWIXPSvc.CommandDetails = {
@@ -512,7 +555,7 @@ function ProcessAcenticSequence() {
 	Logout("Exit AcenticSequence()");
 
 }
-
+*/
 
 
 function sleep(milliseconds) {
