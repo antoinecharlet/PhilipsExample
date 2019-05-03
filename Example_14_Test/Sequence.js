@@ -16,8 +16,9 @@ Sequence : [
 		    }
         }
     },
-	[4, "Trickmode stop " + urlTV1, "WIXP"
-	{
+    {"delay": "4",
+     "text" : "Trickmode stop " + urlTV1, 
+     "WIXP" : 	{
 		"Svc": "WIXP",
 		"SvcVer": "4.0",
 		"Cookie": "202",

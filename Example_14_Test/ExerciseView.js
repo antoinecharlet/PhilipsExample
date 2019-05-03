@@ -277,7 +277,7 @@ function ProcessAcenticSequence() {
 	// #################################################################
 	Logout("Sequence Command 2 - Trickmode stop: " + url2);
 	JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
-	JAPITObjForWIXPSvc.Cookie = 202;
+	JAPITObjForWIXPSvc.Cookie = 202;f
 	JAPITObjForWIXPSvc.CmdType = "Change";
 	JAPITObjForWIXPSvc.Fun = "ChannelSelection";
 	JAPITObjForWIXPSvc.CommandDetails = {
