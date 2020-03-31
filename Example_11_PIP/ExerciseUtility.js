@@ -59,7 +59,7 @@ function UtilityToggleLogsWindow() {
 		document.getElementById('logmsgcallback').style.visibility = "visible";
 		document.getElementById('logmsg').style.visibility = "visible";
 
-		document.getElementById('ButtonToggleLogs').innerHTML = "Hide Logs";
+		document.getElementById('ButtonToggleLogs').innerHTML = "Hide Logs [5]";
 
 	}
 	else {
@@ -71,7 +71,7 @@ function UtilityToggleLogsWindow() {
 		document.getElementById('IDJAPITFromTV').style.visibility = "hidden";
 		document.getElementById('IDJAPITToTV_Misc').style.visibility = "hidden";
 
-		document.getElementById('ButtonToggleLogs').innerHTML = "Show Logs";
+		document.getElementById('ButtonToggleLogs').innerHTML = "Show Logs [5]";
 	}
 }
 

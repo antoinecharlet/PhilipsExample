@@ -111,6 +111,21 @@ function keyHandler(keyCode) {
 				UtilityRefreshPage();
 				break;
 
+			case VK_4:
+				Logout("Received VK_4");
+				tuneHTTP();
+				break;
+
+			case VK_5:
+				Logout("Received VK_5");
+				UtilityToggleLogsWindow();
+				break;
+
+			case VK_6:
+				Logout("Received VK_6");
+				UtilityClearLogsWindow();
+				break;
+
 			default:
 				break;
 		}
@@ -219,11 +234,29 @@ function tuneFullscreen() {
 	}
 }
 
+// init vars to be in global namespace
+var bcastObj = null;
+var videoObj = null;
+
 function tunePIP() {
 	Logout("tunePIP()");
 
+	// remove existing video object
+	if (videoObj) {
+		videoObj.pause();
+		document.getElementById("vidDiv").removeChild(videoObj);
+	}
+
+	// Create the videoobject and append to dom
+	bcastObj = document.createElement("object");
+	bcastObj.setAttribute('type', "video/broadcast");
+	bcastObj.setAttribute('id', "bcastObject");
+	bcastObj.width = "100%";
+	bcastObj.height = "100%";
+	document.getElementById("vidDiv").appendChild(bcastObj);
+
 	try {
-		SetPictureSize(435, 480, 427, 240, "vidDiv");
+		SetPictureSize(50, 50, 427, 240, "vidDiv");
 		var JAPITObjForWIXPSvc = new CreateJAPITObjectForWIXPSvc();
 		JAPITObjForWIXPSvc.CmdType = "Change";
 		JAPITObjForWIXPSvc.Fun = "ChannelSelection";
@@ -232,6 +265,40 @@ function tunePIP() {
 		sendWIxPCommand(JAPITObjForWIXPSvc);
 	} catch (e) {
 		Logout("tunePIP() ERROR. " + e.message);
+	}
+}
+
+function tuneHTTP() {
+	Logout("tuneHTTP()");
+	
+	// remove existing bcast object
+	if (bcastObj)
+		document.getElementById("vidDiv").removeChild(bcastObj);
+
+	// Create the videoobject. It will stay all the time
+	videoObj = document.createElement("video");
+	videoObj.style.width = "100%";
+	videoObj.style.height = "100%";
+	videoObj.controls = true;
+	
+	var url = 'https://ia800300.us.archive.org/17/items/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4';
+	var sourceObj = document.createElement('source');
+	sourceObj.setAttribute('type', "video/mp4");
+	sourceObj.setAttribute('src', url);
+	
+	// add source to video object
+	videoObj.appendChild( sourceObj );
+
+	// add videoObj to document
+	document.getElementById("vidDiv").appendChild(videoObj);
+
+	
+	try {
+		SetPictureSize(100, 100, 640, 360, "vidDiv");
+		videoObj.play();
+
+	} catch (e) {
+		Logout("tuneHTTP() ERROR. " + e.message);
 	}
 }
 
